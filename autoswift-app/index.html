@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AutoKart - Auto Parts Delivery</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#FFD700">
+    
+    <!-- Leaflet CSS for Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    <!-- App Container to simulate mobile view on desktop -->
+    <div id="app">
+        <!-- Header -->
+        <header id="app-header">
+            <div class="header-left">
+                <img src="logo.png" alt="AutoKart Logo" class="app-logo">
+                <div class="location">
+                    <span class="location-title">AutoKart</span>
+                    <span class="location-desc">Mangalore</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="profile-icon" onclick="navigate('profile')">
+                    <i class="ph ph-user"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main id="main-content">
+            <!-- Dynamic Content Injected Here -->
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav id="bottom-nav">
+            <div class="nav-item active" onclick="navigate('home')">
+                <i class="ph ph-house"></i>
+                <span>Home</span>
+            </div>
+            <div class="nav-item" onclick="navigate('search')">
+                <i class="ph ph-magnifying-glass"></i>
+                <span>Search</span>
+            </div>
+            <div class="nav-item" onclick="navigate('sell')">
+                <i class="ph ph-plus-circle"></i>
+                <span>Sell</span>
+            </div>
+            <div class="nav-item" onclick="navigate('cart')">
+                <i class="ph ph-shopping-cart"></i>
+                <span>Cart</span>
+                <span id="cart-badge" class="badge hidden">0</span>
+            </div>
+            <div class="nav-item" onclick="navigate('track')">
+                <i class="ph ph-map-trifold"></i>
+                <span>Track</span>
+            </div>
+        </nav>
+        
+        <!-- WhatsApp Floating Button -->
+        <a href="https://wa.me/916364420190" target="_blank" id="whatsapp-btn">
+            <i class="ph ph-whatsapp-logo"></i>
+        </a>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    
+    <!-- Custom JS -->
+    <script src="app.js"></script>
+    
+    <!-- PWA Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('Service Worker registered!', reg))
+                    .catch(err => console.log('Service Worker registration failed:', err));
+            });
+        }
+    </script>
+</body>
+</html>
