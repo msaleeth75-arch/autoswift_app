@@ -1,762 +1,591 @@
+// --- Data Models (Mock DB) ---
 const categories = [
     { id: 'engine', name: 'Engine Parts', icon: 'ph-engine' },
-    { id: 'brakes', name: 'Brake System', icon: 'ph-disc' },
-    { id: 'electrical', name: 'Electrical', icon: 'ph-lightning' },
-    { id: 'accessories', name: 'Accessories', icon: 'ph-car-profile' },
-    { id: 'bike', name: 'Bike Parts', icon: 'ph-motorcycle' },
-    { id: 'tyres', name: 'Tyres & Wheels', icon: 'ph-tire' },
+    { id: 'brakes', name: 'Brakes', icon: 'ph-disc' },
+    { id: 'electrical', name: 'Electricals', icon: 'ph-lightning' },
+    { id: 'body', name: 'Body Parts', icon: 'ph-car' },
     { id: 'suspension', name: 'Suspension', icon: 'ph-arrows-down-up' },
-    { id: 'body', name: 'Body & Exterior', icon: 'ph-car' },
-];
-
-const shops = [
-    // ── Original Partners ──
-    { id: 's1', name: 'Mangalore Auto Spares', rating: 4.8, time: '15-20 mins', area: 'Hampankatta' },
-    { id: 's2', name: 'City Bike Point', rating: 4.5, time: '20-25 mins', area: 'Kankanady' },
-    { id: 's3', name: 'Coastal Car Accessories', rating: 4.2, time: '30-40 mins', area: 'Bejai' },
-    { id: 's4', name: 'Prime Motors Spares', rating: 4.6, time: '10-15 mins', area: 'Falnir' },
-    { id: 's5', name: 'Royal Enfield Customs', rating: 4.9, time: '25-30 mins', area: 'Kadri' },
-    { id: 's6', name: 'National Auto Garage', rating: 4.3, time: '15-20 mins', area: 'Bunder' },
-    { id: 's7', name: 'Speed Wheels Alloys', rating: 4.7, time: '30-45 mins', area: 'Pumpwell' },
-    { id: 's8', name: 'AutoKart Exclusive Store', rating: 5.0, time: '5-10 mins', area: 'Lalbagh' },
-    { id: 's9', name: 'Kudla Motors & Spares', rating: 4.4, time: '20-30 mins', area: 'Mangaladevi' },
-    { id: 's10', name: 'Highway Auto Care', rating: 4.6, time: '15-25 mins', area: 'Kottara' },
-    { id: 's11', name: 'Udupi Spares Mangalore Hub', rating: 4.1, time: '35-50 mins', area: 'Padil' },
-    { id: 's12', name: 'Global Tyres & Batteries', rating: 4.8, time: '10-20 mins', area: 'Jeppu' },
-    // ── New Partners ──
-    { id: 's13', name: 'Karavali Auto Parts', rating: 4.7, time: '10-15 mins', area: 'Hampankatta' },
-    { id: 's14', name: 'Tyre Zone Mangalore', rating: 4.5, time: '15-20 mins', area: 'Bendoorwell' },
-    { id: 's15', name: 'Sri Devi Motors', rating: 4.3, time: '20-30 mins', area: 'Attavar' },
-    { id: 's16', name: 'Bike Hub Customs', rating: 4.8, time: '10-15 mins', area: 'Valencia' },
-    { id: 's17', name: 'Dakshina Auto Works', rating: 4.6, time: '25-35 mins', area: 'Surathkal' },
-    { id: 's18', name: 'BajrangBali Auto Spares', rating: 4.4, time: '15-20 mins', area: 'Bunder' },
-    { id: 's19', name: 'Netravathi Motors', rating: 4.9, time: '10-15 mins', area: 'Kankanady' },
-    { id: 's20', name: 'MG Road Auto Centre', rating: 4.2, time: '20-25 mins', area: 'MG Road' },
-    { id: 's21', name: 'Pitstop Performance Parts', rating: 4.7, time: '15-20 mins', area: 'Kadri' },
-    { id: 's22', name: 'Moto Garage Mangalore', rating: 4.5, time: '20-30 mins', area: 'Falnir' },
-    { id: 's23', name: 'Kuttipadpu Auto Traders', rating: 4.0, time: '30-40 mins', area: 'Bantwal Rd' },
-    { id: 's24', name: 'Turbo Tech Accessories', rating: 4.8, time: '10-15 mins', area: 'Lalbagh' },
+    { id: 'accessories', name: 'Accessories', icon: 'ph-headlights' }
 ];
 
 const products = [
-    // ═══════════════════ ENGINE PARTS ═══════════════════
-    { id: 1, name: 'K&N Air Filter', category: 'engine', price: 2100, image: 'ph-wind', shopId: 's1' },
-    { id: 2, name: 'Bosch Spark Plug (Set of 4)', category: 'engine', price: 450, image: 'ph-lightning', shopId: 's2' },
-    { id: 3, name: 'Castrol Edge 5W-40 (4L)', category: 'engine', price: 3500, image: 'ph-drop', shopId: 's8' },
-    { id: 4, name: 'NGK Iridium Spark Plug', category: 'engine', price: 850, image: 'ph-lightning', shopId: 's10' },
-    { id: 5, name: 'Timing Belt Kit', category: 'engine', price: 2800, image: 'ph-gear-six', shopId: 's1' },
-    { id: 6, name: 'Mobil 1 Synthetic Oil 5W-30', category: 'engine', price: 4200, image: 'ph-drop', shopId: 's13' },
-    { id: 7, name: 'Water Pump Assembly', category: 'engine', price: 1800, image: 'ph-fan', shopId: 's15' },
-    { id: 8, name: 'Radiator Coolant (5L)', category: 'engine', price: 650, image: 'ph-drop', shopId: 's6' },
-    { id: 9, name: 'Oil Filter – Genuine', category: 'engine', price: 280, image: 'ph-funnel', shopId: 's13' },
-    { id: 10, name: 'Fuel Pump Module', category: 'engine', price: 3200, image: 'ph-gas-pump', shopId: 's17' },
-    { id: 11, name: 'Throttle Body Cleaner', category: 'engine', price: 320, image: 'ph-spray-bottle', shopId: 's18' },
-    { id: 12, name: 'Engine Mount Set', category: 'engine', price: 1500, image: 'ph-nut', shopId: 's19' },
-
-    // ═══════════════════ BRAKE SYSTEM ═══════════════════
-    { id: 13, name: 'Brembo Brake Pads (Front)', category: 'brakes', price: 1250, image: 'ph-disc', shopId: 's1' },
-    { id: 14, name: 'Brembo Brake Pads (Rear)', category: 'brakes', price: 1100, image: 'ph-disc', shopId: 's1' },
-    { id: 15, name: 'Brake Disc Rotor', category: 'brakes', price: 2200, image: 'ph-disc', shopId: 's4' },
-    { id: 16, name: 'Brake Fluid DOT 4 (1L)', category: 'brakes', price: 450, image: 'ph-drop', shopId: 's6' },
-    { id: 17, name: 'ABS Sensor Module', category: 'brakes', price: 1800, image: 'ph-cpu', shopId: 's17' },
-    { id: 18, name: 'Brake Caliper Kit', category: 'brakes', price: 3500, image: 'ph-wrench', shopId: 's13' },
-    { id: 19, name: 'Handbrake Cable', category: 'brakes', price: 600, image: 'ph-link', shopId: 's15' },
-    { id: 20, name: 'Brake Shoe Set (Drum)', category: 'brakes', price: 750, image: 'ph-disc', shopId: 's18' },
-
-    // ═══════════════════ ELECTRICAL ═══════════════════
-    { id: 21, name: 'Amaron Battery 12V 65Ah', category: 'electrical', price: 3200, image: 'ph-battery-full', shopId: 's3' },
-    { id: 22, name: 'Exide Battery 12V 45Ah', category: 'electrical', price: 2400, image: 'ph-battery-full', shopId: 's12' },
-    { id: 23, name: 'LED Headlight Bulbs H4', category: 'electrical', price: 1500, image: 'ph-lightbulb', shopId: 's3' },
-    { id: 24, name: 'LED Fog Lamp Kit', category: 'electrical', price: 1200, image: 'ph-lightbulb', shopId: 's24' },
-    { id: 25, name: 'Alternator Assembly', category: 'electrical', price: 4800, image: 'ph-lightning', shopId: 's19' },
-    { id: 26, name: 'Car Fuse Box Kit', category: 'electrical', price: 350, image: 'ph-cpu', shopId: 's20' },
-    { id: 27, name: 'Ignition Coil Pack', category: 'electrical', price: 1600, image: 'ph-lightning', shopId: 's17' },
-    { id: 28, name: 'Starter Motor', category: 'electrical', price: 5500, image: 'ph-gear-six', shopId: 's19' },
-    { id: 29, name: 'Wiring Harness Set', category: 'electrical', price: 900, image: 'ph-plugs', shopId: 's20' },
-    { id: 30, name: 'Horn – Hella Twin Tone', category: 'electrical', price: 750, image: 'ph-megaphone', shopId: 's24' },
-
-    // ═══════════════════ ACCESSORIES ═══════════════════
-    { id: 31, name: 'Car Cover Waterproof', category: 'accessories', price: 900, image: 'ph-car', shopId: 's4' },
-    { id: 32, name: 'Denso Wipers (Pair)', category: 'accessories', price: 800, image: 'ph-cloud-rain', shopId: 's9' },
-    { id: 33, name: 'Pioneer Car Stereo', category: 'accessories', price: 4500, image: 'ph-speaker-hifi', shopId: 's8' },
-    { id: 34, name: 'Dash Cam 1080p', category: 'accessories', price: 3200, image: 'ph-video-camera', shopId: 's24' },
-    { id: 35, name: 'Seat Cover PU Leather (Full)', category: 'accessories', price: 4800, image: 'ph-armchair', shopId: 's8' },
-    { id: 36, name: 'Car Perfume – Godrej Aer', category: 'accessories', price: 250, image: 'ph-wind', shopId: 's20' },
-    { id: 37, name: 'Floor Mat Set (4 pc)', category: 'accessories', price: 1200, image: 'ph-squares-four', shopId: 's9' },
-    { id: 38, name: 'Sun Visor Film – 3M', category: 'accessories', price: 1800, image: 'ph-sun', shopId: 's24' },
-    { id: 39, name: 'Mobile Phone Mount', category: 'accessories', price: 450, image: 'ph-device-mobile', shopId: 's20' },
-    { id: 40, name: 'Steering Wheel Cover', category: 'accessories', price: 550, image: 'ph-steering-wheel', shopId: 's22' },
-
-    // ═══════════════════ BIKE PARTS ═══════════════════
-    { id: 41, name: 'Motul 7100 10W50 (1L)', category: 'bike', price: 850, image: 'ph-drop', shopId: 's2' },
-    { id: 42, name: 'Chain Lube Spray – Motul', category: 'bike', price: 350, image: 'ph-spray-bottle', shopId: 's4' },
-    { id: 43, name: 'Exide Bike Battery 12V 9Ah', category: 'bike', price: 1800, image: 'ph-battery-full', shopId: 's11' },
-    { id: 44, name: 'Chain & Sprocket Kit', category: 'bike', price: 1600, image: 'ph-link', shopId: 's5' },
-    { id: 45, name: 'RE Classic Silencer', category: 'bike', price: 3500, image: 'ph-cylinder', shopId: 's5' },
-    { id: 46, name: 'Clutch Cable Assembly', category: 'bike', price: 280, image: 'ph-link', shopId: 's16' },
-    { id: 47, name: 'Visor – Full Face Helmet', category: 'bike', price: 450, image: 'ph-shield-check', shopId: 's16' },
-    { id: 48, name: 'Crash Guard – RE 350', category: 'bike', price: 2200, image: 'ph-shield', shopId: 's5' },
-    { id: 49, name: 'LED Tail Light Universal', category: 'bike', price: 650, image: 'ph-lightbulb', shopId: 's16' },
-    { id: 50, name: 'Bike Cover Waterproof', category: 'bike', price: 500, image: 'ph-umbrella', shopId: 's22' },
-
-    // ═══════════════════ TYRES & WHEELS ═══════════════════
-    { id: 51, name: 'Michelin Pilot Sport Tyre', category: 'tyres', price: 6500, image: 'ph-circle-dashed', shopId: 's12' },
-    { id: 52, name: 'MRF ZLX 175/65 R14', category: 'tyres', price: 3800, image: 'ph-circle-dashed', shopId: 's14' },
-    { id: 53, name: 'CEAT Milaze X3 155/80 R13', category: 'tyres', price: 2900, image: 'ph-circle-dashed', shopId: 's14' },
-    { id: 54, name: 'Apollo Amazer 4G 165/80 R14', category: 'tyres', price: 3200, image: 'ph-circle-dashed', shopId: 's14' },
-    { id: 55, name: 'JK Tyre UX Royale 185/65 R15', category: 'tyres', price: 4100, image: 'ph-circle-dashed', shopId: 's12' },
-    { id: 56, name: 'Alloy Wheels 15" (Set of 4)', category: 'tyres', price: 12000, image: 'ph-circle-notch', shopId: 's7' },
-    { id: 57, name: 'Steel Wheel Rim 14"', category: 'tyres', price: 1800, image: 'ph-circle-notch', shopId: 's7' },
-    { id: 58, name: 'Tubeless Tyre Repair Kit', category: 'tyres', price: 350, image: 'ph-wrench', shopId: 's14' },
-    { id: 59, name: 'MRF Bike Tyre – Revz FC', category: 'tyres', price: 2400, image: 'ph-circle-dashed', shopId: 's16' },
-    { id: 60, name: 'Wheel Balancing Weights', category: 'tyres', price: 120, image: 'ph-scales', shopId: 's7' },
-
-    // ═══════════════════ SUSPENSION ═══════════════════
-    { id: 61, name: 'Monroe Front Shock Absorber', category: 'suspension', price: 2800, image: 'ph-arrows-down-up', shopId: 's17' },
-    { id: 62, name: 'Monroe Rear Shock Absorber', category: 'suspension', price: 2500, image: 'ph-arrows-down-up', shopId: 's17' },
-    { id: 63, name: 'Coil Spring Set (Front)', category: 'suspension', price: 3200, image: 'ph-spiral', shopId: 's21' },
-    { id: 64, name: 'Strut Mount Bearing', category: 'suspension', price: 950, image: 'ph-nut', shopId: 's21' },
-    { id: 65, name: 'Control Arm Bushing Kit', category: 'suspension', price: 1200, image: 'ph-nut', shopId: 's21' },
-    { id: 66, name: 'Tie Rod End – Pair', category: 'suspension', price: 1400, image: 'ph-link', shopId: 's15' },
-    { id: 67, name: 'Ball Joint Lower Arm', category: 'suspension', price: 800, image: 'ph-nut', shopId: 's23' },
-    { id: 68, name: 'Stabilizer Link Kit', category: 'suspension', price: 650, image: 'ph-link', shopId: 's23' },
-
-    // ═══════════════════ BODY & EXTERIOR ═══════════════════
-    { id: 69, name: 'Side Mirror (LH) – Universal', category: 'body', price: 750, image: 'ph-rectangle', shopId: 's20' },
-    { id: 70, name: 'Bumper Guard Chrome', category: 'body', price: 1800, image: 'ph-shield', shopId: 's24' },
-    { id: 71, name: 'Door Handle Chrome Set', category: 'body', price: 1200, image: 'ph-door', shopId: 's22' },
-    { id: 72, name: 'Mud Flap Set (4 pc)', category: 'body', price: 400, image: 'ph-squares-four', shopId: 's23' },
-    { id: 73, name: 'Tail Lamp Assembly (LH)', category: 'body', price: 2200, image: 'ph-lightbulb', shopId: 's15' },
-    { id: 74, name: 'Headlamp Assembly (RH)', category: 'body', price: 3500, image: 'ph-lightbulb', shopId: 's19' },
-    { id: 75, name: 'Windshield Glass – Front', category: 'body', price: 5500, image: 'ph-rectangle', shopId: 's23' },
-    { id: 76, name: 'Roof Rail Bar Set', category: 'body', price: 3800, image: 'ph-line-segments', shopId: 's24' },
+    { id: 1, name: 'Brembo Ceramic Brake Pads', brand: 'Brembo', category: 'brakes', price: 3499, mrp: 4500, rating: 4.8, reviews: 124, stock: 15, image: 'https://loremflickr.com/400/400/car,brakes,pad?lock=1', partNumber: 'BR-9921', desc: 'Premium ceramic brake pads for high performance and low dust.' },
+    { id: 2, name: 'Castrol EDGE 5W-40 Synthetic Oil', brand: 'Castrol', category: 'engine', price: 2199, mrp: 2800, rating: 4.9, reviews: 450, stock: 50, image: 'https://loremflickr.com/400/400/engine,oil?lock=2', partNumber: 'CS-EDGE-5W40', desc: 'Advanced full synthetic engine oil providing superior performance.' },
+    { id: 3, name: 'NGK Iridium IX Spark Plug Set', brand: 'NGK', category: 'electrical', price: 1800, mrp: 2200, rating: 4.7, reviews: 310, stock: 25, image: 'https://loremflickr.com/400/400/sparkplug?lock=3', partNumber: 'NGK-IR-4', desc: 'Extreme ignitability, improved throttle response and superior anti-fouling.' },
+    { id: 4, name: 'Monroe OESpectrum Strut', brand: 'Monroe', category: 'suspension', price: 4200, mrp: 5100, rating: 4.6, reviews: 89, stock: 8, image: 'https://loremflickr.com/400/400/car,suspension?lock=4', partNumber: 'MN-723', desc: 'Engineered for superior ride quality and control.' },
+    { id: 5, name: 'Bosch Clear Advantage Wiper Blades', brand: 'Bosch', category: 'body', price: 650, mrp: 850, rating: 4.5, reviews: 520, stock: 100, image: 'https://loremflickr.com/400/400/windshield,wiper?lock=5', partNumber: 'BS-CL-21', desc: 'All-weather performance and smooth, quiet wiping.' },
+    { id: 6, name: 'K&N High Performance Air Filter', brand: 'K&N', category: 'engine', price: 3100, mrp: 3800, rating: 4.8, reviews: 215, stock: 12, image: 'https://loremflickr.com/400/400/car,parts,engine?lock=6', partNumber: 'KN-33-22', desc: 'Designed to increase horsepower and acceleration.' },
 ];
 
-// App State
+const banners = [
+    { title: 'Summer Sale', desc: 'Up to 40% off on AC components.', color: 'red', btn: 'Shop Now' },
+    { title: 'Brembo Official', desc: 'New performance kits arrived.', color: 'blue', btn: 'View Range' },
+    { title: 'Free Delivery', desc: 'On orders above ₹5,000.', color: 'green', btn: 'Explore' }
+];
+
+// --- App State ---
 let currentView = 'home';
 let cart = [];
-let mapInitialized = false;
-let map;
+let wishlist = [];
+let isDarkMode = false;
+let mapInstance = null;
 
 // DOM Elements
 const mainContent = document.getElementById('main-content');
 const cartBadge = document.getElementById('cart-badge');
+const globalSearchContainer = document.getElementById('global-search-container');
+const themeIcon = document.getElementById('theme-icon');
+const productModal = document.getElementById('product-modal');
+const productModalContent = document.getElementById('product-modal-content');
+const browserModal = document.getElementById('browser-modal');
+const browserFrame = document.getElementById('browser-frame');
+const browserUrlText = document.getElementById('browser-url-text');
 
-// Initialize App
+// --- Initialization ---
 function init() {
-    renderHome();
-    updateNav();
-}
-
-// Navigation Logic
-function navigate(viewId, param = null) {
-    currentView = viewId;
-    updateNav();
-    
-    switch(viewId) {
-        case 'home': renderHome(); break;
-        case 'search': renderSearch(); break;
-        case 'sell': renderSell(); break;
-        case 'cart': renderCart(); break;
-        case 'track': renderTrack(); break;
-        case 'profile': renderProfile(); break;
-        case 'shop': renderShop(param); break;
+    // Check theme preference
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        toggleTheme();
     }
     
-    // Scroll to top on navigation
-    mainContent.scrollTop = 0;
+    navigate('home');
 }
 
-function updateNav() {
+function toggleTheme() {
+    isDarkMode = !isDarkMode;
+    document.body.classList.toggle('dark-mode');
+    document.body.classList.toggle('light-mode');
+    themeIcon.className = isDarkMode ? 'ph ph-sun' : 'ph ph-moon';
+}
+
+function navigate(viewId) {
+    currentView = viewId;
+    
+    // Update bottom nav active state
     document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.remove('active');
-        if (item.getAttribute('onclick').includes(`'${currentView}'`)) {
+        if (item.getAttribute('onclick').includes(`'${viewId}'`)) {
             item.classList.add('active');
         }
     });
+
+    // Toggle search bar visibility
+    if (viewId === 'home' || viewId === 'categories') {
+        globalSearchContainer.style.display = 'block';
+    } else {
+        globalSearchContainer.style.display = 'none';
+    }
+
+    mainContent.scrollTop = 0;
+    renderCurrentView();
 }
 
-// Render Functions
-function renderHome() {
-    let html = `
-        <div class="view active" id="view-home">
-            <div class="hero">
-                <h1>Fast <span>Delivery</span><br>of Auto Parts</h1>
-                <p>Genuine spares for your car and bike, delivered to your door in Mangalore.</p>
-                <div class="hero-stats">
-                    <div class="hero-stat">
-                        <strong>${shops.length}</strong>
-                        <span>Partners</span>
-                    </div>
-                    <div class="hero-stat">
-                        <strong>${products.length}+</strong>
-                        <span>Parts</span>
-                    </div>
-                    <div class="hero-stat">
-                        <strong>${categories.length}</strong>
-                        <span>Categories</span>
-                    </div>
-                </div>
-                <button class="btn" onclick="navigate('search')">
-                    <i class="ph ph-magnifying-glass"></i> Find Parts
-                </button>
-            </div>
-            
-            <h2 class="section-title">Categories</h2>
-            <div class="categories-grid">
-                ${categories.map(cat => {
-                    const count = products.filter(p => p.category === cat.id).length;
-                    return `
-                    <div class="category-item" onclick="navigate('search'); filterByCategory('${cat.id}')">
-                        <div class="category-icon">
-                            <i class="ph ${cat.icon}"></i>
-                        </div>
-                        <span>${cat.name}</span>
-                        <span class="cat-count">${count} parts</span>
-                    </div>
-                `}).join('')}
-            </div>
-            
-            <h2 class="section-title">Partner Shops <span class="title-badge">${shops.length}</span></h2>
-            <div class="shops-list">
-                ${shops.map(shop => {
-                    const partCount = products.filter(p => p.shopId === shop.id).length;
-                    return `
-                    <div class="shop-card" onclick="navigate('shop', '${shop.id}')">
-                        <div class="shop-img">
-                            <i class="ph ph-storefront"></i>
-                        </div>
-                        <div class="shop-info">
-                            <div class="shop-name">${shop.name}</div>
-                            <div class="shop-area"><i class="ph ph-map-pin"></i> ${shop.area || 'Mangalore'}</div>
-                            <div class="shop-meta">
-                                <span class="rating"><i class="ph-fill ph-star"></i> ${shop.rating}</span>
-                                <span class="time"><i class="ph ph-clock"></i> ${shop.time}</span>
-                                <span class="parts-count"><i class="ph ph-package"></i> ${partCount}</span>
-                            </div>
-                        </div>
-                    </div>
-                `}).join('')}
-            </div>
-            
-            <h2 class="section-title">Popular Parts</h2>
-            <div class="product-list">
-                ${products.slice(0, 6).map(p => productCard(p)).join('')}
-            </div>
-        </div>
-    `;
-    mainContent.innerHTML = html;
-}
-
-function renderSearch(categoryId = null) {
-    let html = `
-        <div class="view active" id="view-search">
-            <div class="search-container">
-                <div class="search-box">
-                    <i class="ph ph-magnifying-glass"></i>
-                    <input type="text" id="search-input" placeholder="Search by part name or vehicle..." onkeyup="handleSearch()">
-                </div>
-            </div>
-            
-            <div class="product-list" id="search-results">
-                ${products.map(p => productCard(p)).join('')}
-            </div>
-        </div>
-    `;
+// --- Render Logic ---
+function renderCurrentView() {
+    let html = '';
+    
+    switch(currentView) {
+        case 'home': html = getHomeHtml(); break;
+        case 'search': html = getSearchHtml(); break;
+        case 'categories': html = getCategoriesHtml(); break;
+        case 'cart': html = getCartHtml(); break;
+        case 'seller': html = getSellerHtml(); break;
+        case 'admin': html = getAdminHtml(); break;
+        case 'profile': html = getProfileHtml(); break;
+        default: html = getHomeHtml();
+    }
+    
     mainContent.innerHTML = html;
     
-    if (categoryId) {
-        // Implementation for filtering by category if needed
-        document.getElementById('search-input').value = categoryId; // Mock behavior
-        handleSearch();
-    }
+    // Post render actions
+    if (currentView === 'home') setupCarousel();
+    if (currentView === 'search') document.getElementById('search-input').focus();
+}
+
+// --- View HTML Generators ---
+
+function getHomeHtml() {
+    let html = `
+        <div class="view active">
+            <!-- Banner Carousel -->
+            <div class="carousel-container">
+                <div class="carousel-track" id="home-carousel">
+                    ${banners.map(b => `
+                        <div class="carousel-slide">
+                            <div class="banner ${b.color}">
+                                <h2>${b.title}</h2>
+                                <p>${b.desc}</p>
+                                <button class="btn">${b.btn}</button>
+                                <i class="ph ph-engine banner-bg-icon"></i>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="carousel-indicators" id="carousel-indicators">
+                    ${banners.map((_, i) => `<div class="indicator ${i===0?'active':''}"></div>`).join('')}
+                </div>
+            </div>
+
+            <!-- Quick Categories -->
+            <div class="section-header">
+                <span class="section-title">Shop by Category</span>
+                <span class="see-all" onclick="navigate('categories')">See All</span>
+            </div>
+            <div class="quick-categories">
+                ${categories.map(c => `
+                    <div class="quick-cat" onclick="openSearchFilter('${c.id}')">
+                        <div class="quick-cat-icon"><i class="ph ${c.icon}"></i></div>
+                        <span>${c.name.split(' ')[0]}</span>
+                    </div>
+                `).join('')}
+            </div>
+
+            <!-- Trending / Best Sellers -->
+            <div class="section-header">
+                <span class="section-title">Trending Parts</span>
+                <span class="see-all">See All</span>
+            </div>
+            <div class="product-h-list">
+                ${products.map(p => getProductCardHtml(p)).join('')}
+            </div>
+            
+            <!-- New Arrivals -->
+            <div class="section-header">
+                <span class="section-title">New Arrivals</span>
+            </div>
+            <div class="product-h-list">
+                ${[...products].reverse().map(p => getProductCardHtml(p)).join('')}
+            </div>
+            
+            <div style="height: 24px;"></div>
+        </div>
+    `;
+    return html;
+}
+
+function getProductCardHtml(p) {
+    const isWished = wishlist.includes(p.id);
+    const inCart = cart.some(c => c.id === p.id);
+    return `
+        <div class="product-card-v" onclick="openProduct(${p.id})">
+            <button class="wishlist-btn ${isWished ? 'active' : ''}" onclick="toggleWishlist(event, ${p.id})">
+                <i class="ph ${isWished ? 'ph-heart-fill' : 'ph-heart'}"></i>
+            </button>
+            <div class="img-container">
+                ${p.image.startsWith('ph-') ? `<i class="ph ${p.image}"></i>` : `<img src="${p.image}" alt="${p.name}" class="product-photo">`}
+            </div>
+            <div class="brand">${p.brand}</div>
+            <div class="title">${p.name}</div>
+            <div class="rating"><i class="ph-fill ph-star"></i> ${p.rating} (${p.reviews})</div>
+            <div class="price-row">
+                <div class="price">₹${p.price.toLocaleString()}</div>
+                <button class="add-to-cart-sm ${inCart ? 'added' : ''}" onclick="toggleCart(event, ${p.id})">
+                    <i class="ph ${inCart ? 'ph-check' : 'ph-plus'}"></i>
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+function getSearchHtml() {
+    return `
+        <div class="view active" style="padding-top: 16px;">
+            <div class="search-bar-container">
+                <div class="search-bar" style="border-color: var(--primary-color);">
+                    <i class="ph ph-magnifying-glass"></i>
+                    <input type="text" id="search-input" placeholder="Search by vehicle, part number..." oninput="handleSearch()">
+                    <i class="ph ph-sliders"></i>
+                </div>
+            </div>
+            
+            <div class="search-filters">
+                <div class="filter-chip active">All Results</div>
+                <div class="filter-chip">Engine</div>
+                <div class="filter-chip">Brakes</div>
+                <div class="filter-chip">Suspension</div>
+            </div>
+            
+            <div class="search-results-grid" id="search-results">
+                ${products.map(p => getProductCardHtml(p)).join('')}
+            </div>
+        </div>
+    `;
 }
 
 function handleSearch() {
-    const query = document.getElementById('search-input').value.toLowerCase();
+    const q = document.getElementById('search-input').value.toLowerCase();
     const filtered = products.filter(p => 
-        p.name.toLowerCase().includes(query) || 
-        p.category.toLowerCase().includes(query) ||
-        (shops.find(s => s.id === p.shopId)?.name.toLowerCase().includes(query))
+        p.name.toLowerCase().includes(q) || 
+        p.brand.toLowerCase().includes(q) || 
+        p.partNumber.toLowerCase().includes(q)
     );
     
     document.getElementById('search-results').innerHTML = filtered.length ? 
-        filtered.map(p => productCard(p)).join('') : 
-        `<div class="empty-state">
+        filtered.map(p => getProductCardHtml(p)).join('') : 
+        `<div style="grid-column: 1/-1;" class="empty-state">
             <i class="ph ph-magnifying-glass"></i>
-            <p>No parts found</p>
+            <h3>No results found</h3>
+            <p>Try searching for a different part or model.</p>
         </div>`;
 }
 
-function filterByCategory(catId) {
+function openSearchFilter(catId) {
+    navigate('search');
     setTimeout(() => {
-        const input = document.getElementById('search-input');
-        if (input) {
-            input.value = catId;
+        const searchInput = document.getElementById('search-input');
+        if(searchInput) {
+            searchInput.value = catId;
             handleSearch();
         }
-    }, 50);
+    }, 10);
 }
 
-function renderShop(shopId) {
-    const shop = shops.find(s => s.id === shopId);
-    const shopProducts = products.filter(p => p.shopId === shopId);
-    
-    let html = `
-        <div class="view active" id="view-shop">
-            <div style="background: var(--white); padding: 16px; border-bottom: 1px solid var(--gray-light); margin-bottom: 16px; position: sticky; top: 0; z-index: 10;">
-                <button class="btn btn-secondary" style="margin-bottom: 12px; padding: 6px 12px;" onclick="navigate('home')">
-                    <i class="ph ph-arrow-left"></i> Back
-                </button>
-                <h2 style="font-size: 20px; font-weight: 700;">${shop.name}</h2>
-                <div class="shop-area" style="margin-top: 4px;"><i class="ph ph-map-pin"></i> ${shop.area || 'Mangalore'}</div>
-                <div class="shop-meta" style="margin-top: 8px;">
-                    <span class="rating"><i class="ph-fill ph-star"></i> ${shop.rating}</span>
-                    <span class="time"><i class="ph ph-clock"></i> ${shop.time}</span>
-                    <span class="parts-count"><i class="ph ph-package"></i> ${shopProducts.length} parts</span>
-                </div>
-            </div>
-            
-            <h2 class="section-title">Available Parts</h2>
-            <div class="product-list">
-                ${shopProducts.length ? shopProducts.map(p => productCard(p)).join('') : '<div class="empty-state"><p>No parts available</p></div>'}
+function getCategoriesHtml() {
+    return `
+        <div class="view active">
+            <h2 class="section-title" style="margin-top: 16px;">All Categories</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px;">
+                ${categories.map(c => `
+                    <div class="dashboard-card" style="margin:0; display:flex; flex-direction:column; align-items:center; cursor:pointer;" onclick="navigate('search')">
+                        <div style="font-size: 48px; color: var(--accent-color); margin-bottom: 12px;"><i class="ph ${c.icon}"></i></div>
+                        <h4 style="font-size:14px;">${c.name}</h4>
+                    </div>
+                `).join('')}
             </div>
         </div>
     `;
-    mainContent.innerHTML = html;
 }
 
-function renderCart() {
-    let html = `<div class="view active" id="view-cart">`;
-    
+function getCartHtml() {
     if (cart.length === 0) {
-        html += `
-            <div class="empty-state">
+        return `
+            <div class="view active empty-state">
                 <i class="ph ph-shopping-cart"></i>
                 <h3>Your cart is empty</h3>
-                <p style="margin: 8px 0 16px;">Looks like you haven't added any parts yet.</p>
-                <button class="btn" onclick="navigate('search')">Browse Parts</button>
+                <p>Looks like you haven't added any premium parts yet.</p>
+                <button class="btn" style="margin-top: 24px;" onclick="navigate('home')">Start Shopping</button>
             </div>
         `;
-    } else {
-        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-        const deliveryFee = 50;
-        const total = subtotal + deliveryFee;
-        
-        html += `
-            <div style="padding: 16px;">
+    }
+
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    const tax = subtotal * 0.18; // 18% GST mock
+    const total = subtotal + tax;
+
+    return `
+        <div class="view active">
+            <h2 class="section-title">Your Cart</h2>
+            <div class="cart-list">
                 ${cart.map(item => `
                     <div class="cart-item">
-                        <div class="cart-item-info">
-                            <div class="product-img" style="width: 50px; height: 50px; font-size: 24px;">
-                                <i class="ph ${item.image}"></i>
-                            </div>
-                            <div>
-                                <div class="product-title">${item.name}</div>
-                                <div class="product-price">₹${item.price}</div>
-                            </div>
+                        <div class="cart-item-img">
+                            ${item.image.startsWith('ph-') ? `<i class="ph ${item.image}"></i>` : `<img src="${item.image}" alt="${item.name}" class="product-photo">`}
                         </div>
-                        <div class="cart-qty-ctrl">
-                            <button onclick="updateQty(${item.id}, -1)">-</button>
-                            <span>${item.qty}</span>
-                            <button onclick="updateQty(${item.id}, 1)">+</button>
+                        <div class="cart-item-info">
+                            <div class="cart-item-title">${item.name}</div>
+                            <div class="cart-item-actions">
+                                <div class="cart-item-price">₹${item.price.toLocaleString()}</div>
+                                <div class="qty-ctrl">
+                                    <button onclick="updateQty(${item.id}, -1)">-</button>
+                                    <span>${item.qty}</span>
+                                    <button onclick="updateQty(${item.id}, 1)">+</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 `).join('')}
             </div>
             
-            <h2 class="section-title">Payment Method</h2>
-            <div class="payment-methods">
-                <div class="payment-option selected" onclick="selectPayment(this)">
-                    <i class="ph ph-money" style="color: #4CAF50;"></i>
-                    <div style="flex:1">
-                        <div style="font-weight: 600;">Cash on Delivery</div>
-                        <div style="font-size: 12px; color: var(--gray-dark);">Pay when you receive</div>
-                    </div>
-                    <i class="ph ph-check-circle" style="color: var(--primary-color);"></i>
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span>₹${subtotal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
                 </div>
-                <div class="payment-option" onclick="selectPayment(this)">
-                    <i class="ph ph-qr-code"></i>
-                    <div style="flex:1">
-                        <div style="font-weight: 600;">UPI</div>
-                        <div style="font-size: 12px; color: var(--gray-dark);">Google Pay, PhonePe, Paytm</div>
-                    </div>
+                <div class="summary-row">
+                    <span>GST (18%)</span>
+                    <span>₹${tax.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
                 </div>
+                <div class="summary-row">
+                    <span>Delivery</span>
+                    <span style="color: var(--success);">Free</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total Amount</span>
+                    <span>₹${total.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
+                </div>
+                
+                <button class="btn btn-block" style="margin-top: 20px;">Proceed to Checkout</button>
             </div>
-            
-            <div class="bill-details">
-                <div class="bill-row">
-                    <span>Item Total</span>
-                    <span>₹${subtotal}</span>
+        </div>
+    `;
+}
+
+function getSellerHtml() {
+    return `
+        <div class="view active">
+            <div class="dashboard-card">
+                <h2>Seller Dashboard</h2>
+                <p style="color: var(--text-secondary); font-size: 13px;">Manage your premium catalog.</p>
+                
+                <div class="stat-grid">
+                    <div class="stat-box">
+                        <h3>12</h3>
+                        <p>Active Listings</p>
+                    </div>
+                    <div class="stat-box">
+                        <h3>48</h3>
+                        <p>Orders this week</p>
+                    </div>
                 </div>
-                <div class="bill-row">
-                    <span>Delivery Fee</span>
-                    <span>₹${deliveryFee}</span>
-                </div>
-                <div class="bill-row bill-total">
-                    <span>To Pay</span>
-                    <span>₹${total}</span>
-                </div>
-            </div>
-            
-            <div style="height: 100px;"></div>
-            
-            <div class="checkout-bar">
-                <div>
-                    <div style="font-size: 12px; color: var(--gray-dark);">Total Amount</div>
-                    <div style="font-weight: 700; font-size: 18px;">₹${total}</div>
-                </div>
-                <button class="btn" onclick="placeOrder()">
-                    Place Order <i class="ph ph-arrow-right"></i>
+                
+                <button class="btn btn-block btn-outline" style="margin-top: 24px;">
+                    <i class="ph ph-plus"></i> Add New Product
                 </button>
             </div>
-        `;
-    }
-    
-    html += `</div>`;
-    mainContent.innerHTML = html;
+        </div>
+    `;
 }
 
-function selectPayment(element) {
-    document.querySelectorAll('.payment-option').forEach(el => {
-        el.classList.remove('selected');
-        const icon = el.querySelector('.ph-check-circle');
-        if(icon) icon.remove();
-    });
-    element.classList.add('selected');
-    element.innerHTML += '<i class="ph ph-check-circle" style="color: var(--primary-color);"></i>';
-}
-
-function placeOrder() {
-    if (cart.length === 0) return;
-
-    // Get selected payment method
-    let paymentMethod = 'Cash on Delivery';
-    const selectedPaymentEl = document.querySelector('.payment-option.selected .font-weight-600') || document.querySelector('.payment-option.selected div[style*="font-weight: 600"]');
-    if (selectedPaymentEl) {
-        paymentMethod = selectedPaymentEl.innerText;
-    }
-
-    // Calculate totals
-    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-    const deliveryFee = 50;
-    const total = subtotal + deliveryFee;
-
-    // Format WhatsApp message
-    let message = `*New Order from AutoKart* 🚀\n\n*Items:*\n`;
-    cart.forEach(item => {
-        message += `- ${item.qty}x ${item.name} (₹${item.price})\n`;
-    });
-    
-    message += `\n*Delivery Fee:* ₹${deliveryFee}`;
-    message += `\n*Total Amount:* ₹${total}`;
-    message += `\n*Payment Method:* ${paymentMethod}`;
-    message += `\n\nPlease confirm my order.`;
-
-    // Encode message for URL
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappNumber = "916364420190"; // Replace with actual business number
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-
-    // Open WhatsApp in a new tab/window
-    window.open(whatsappUrl, '_blank');
-
-    // Reset cart and go to tracking
-    cart = [];
-    updateCartBadge();
-    navigate('track');
-}
-
-function renderTrack() {
-    let html = `
-        <div class="view active" id="view-track">
-            <div id="map"></div>
-            <div class="status-timeline">
-                <h3 style="margin-bottom: 24px;">Order #AW84729</h3>
+function getAdminHtml() {
+    return `
+        <div class="view active">
+            <div class="dashboard-card" style="border-top: 4px solid var(--primary-color);">
+                <h2>Admin Control Panel</h2>
+                <p style="color: var(--text-secondary); font-size: 13px;">Platform analytics and management.</p>
                 
-                <div class="status-step completed">
-                    <div class="step-icon"><i class="ph ph-check"></i></div>
-                    <div class="step-content">
-                        <h4>Order Accepted</h4>
-                        <p>12:30 PM</p>
+                <div class="stat-grid">
+                    <div class="stat-box">
+                        <h3>₹2.4M</h3>
+                        <p>Revenue (MTD)</p>
                     </div>
-                </div>
-                
-                <div class="status-step completed">
-                    <div class="step-icon"><i class="ph ph-package"></i></div>
-                    <div class="step-content">
-                        <h4>Items Packed</h4>
-                        <p>12:45 PM</p>
+                    <div class="stat-box">
+                        <h3>1.2k</h3>
+                        <p>Active Users</p>
                     </div>
-                </div>
-                
-                <div class="status-step active">
-                    <div class="step-icon"><i class="ph ph-motorcycle"></i></div>
-                    <div class="step-content">
-                        <h4>Out for Delivery</h4>
-                        <p>Arriving in ~15 mins</p>
+                    <div class="stat-box">
+                        <h3>84</h3>
+                        <p>Verified Sellers</p>
                     </div>
-                </div>
-                
-                <div class="status-step">
-                    <div class="step-icon"><i class="ph ph-house"></i></div>
-                    <div class="step-content">
-                        <h4>Delivered</h4>
-                        <p>Pending</p>
+                    <div class="stat-box">
+                        <h3 style="color: var(--warning);">12</h3>
+                        <p>Pending Tickets</p>
                     </div>
                 </div>
             </div>
         </div>
     `;
-    mainContent.innerHTML = html;
-    
-    // Initialize Map after DOM is updated
-    setTimeout(initMap, 100);
 }
 
-function initMap() {
-    if (map) {
-        map.remove();
-    }
-    
-    // Mangalore Coordinates
-    const mangaloreLat = 12.8722;
-    const mangaloreLng = 74.8425;
-    
-    map = L.map('map', { zoomControl: false }).setView([mangaloreLat, mangaloreLng], 14);
-    
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
-    
-    // Delivery Boy Marker
-    const deliveryIcon = L.divIcon({
-        html: '<div style="background:var(--primary-color); color:black; width:30px; height:30px; border-radius:50%; display:flex; justify-content:center; align-items:center; border:2px solid white; box-shadow:0 2px 5px rgba(0,0,0,0.3);"><i class="ph ph-motorcycle" style="font-size:18px;"></i></div>',
-        className: '',
-        iconSize: [30, 30],
-        iconAnchor: [15, 15]
-    });
-    
-    L.marker([mangaloreLat, mangaloreLng], {icon: deliveryIcon}).addTo(map)
-        .bindPopup('Delivery Partner')
-        .openPopup();
-        
-    // Customer Location
-    const customerIcon = L.divIcon({
-        html: '<div style="background:black; color:white; width:30px; height:30px; border-radius:50%; display:flex; justify-content:center; align-items:center; border:2px solid white; box-shadow:0 2px 5px rgba(0,0,0,0.3);"><i class="ph ph-house" style="font-size:18px;"></i></div>',
-        className: '',
-        iconSize: [30, 30],
-        iconAnchor: [15, 15]
-    });
-    
-    L.marker([12.8800, 74.8500], {icon: customerIcon}).addTo(map);
-}
-
-function renderProfile() {
-    let html = `
-        <div class="view active" id="view-profile">
-            <div class="profile-header">
-                <div class="avatar">
+function getProfileHtml() {
+    return `
+        <div class="view active">
+            <div class="dashboard-card" style="display:flex; align-items:center; gap:16px;">
+                <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--primary-color); display:flex; justify-content:center; align-items:center; color:white; font-size: 24px;">
                     <i class="ph ph-user"></i>
                 </div>
-                <h2 style="margin-bottom: 4px;">Moha Saleeth</h2>
-                <p style="color: var(--gray-dark); font-size: 14px;">+91 98765 43210</p>
-                <div style="margin-top: 16px;">
-                    <button class="btn" style="padding: 8px 16px;">Edit Profile</button>
+                <div>
+                    <h2 style="font-size:18px;">Demo User</h2>
+                    <p style="color:var(--text-secondary); font-size:13px;">demo@autokart.com</p>
                 </div>
             </div>
             
-            <div class="profile-links">
-                <div class="profile-link">
-                    <div class="profile-link-left">
-                        <i class="ph ph-clock-counter-clockwise" style="font-size: 20px;"></i>
-                        <span>Order History</span>
+            <div style="padding: 0 16px;">
+                <div style="background: var(--surface-color); border-radius: var(--radius-md); overflow:hidden; box-shadow: var(--shadow-sm);">
+                    <div style="padding: 16px; border-bottom: 1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                        <span style="font-weight:600;"><i class="ph ph-package" style="margin-right:8px; font-size:18px; vertical-align:middle;"></i> My Orders</span>
+                        <i class="ph ph-caret-right text-secondary"></i>
                     </div>
-                    <i class="ph ph-caret-right" style="color: var(--gray-dark);"></i>
-                </div>
-                <div class="profile-link">
-                    <div class="profile-link-left">
-                        <i class="ph ph-map-pin" style="font-size: 20px;"></i>
-                        <span>Saved Addresses</span>
+                    <div style="padding: 16px; border-bottom: 1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                        <span style="font-weight:600;"><i class="ph ph-heart" style="margin-right:8px; font-size:18px; vertical-align:middle;"></i> Wishlist</span>
+                        <i class="ph ph-caret-right text-secondary"></i>
                     </div>
-                    <i class="ph ph-caret-right" style="color: var(--gray-dark);"></i>
-                </div>
-                <div class="profile-link">
-                    <div class="profile-link-left">
-                        <i class="ph ph-wallet" style="font-size: 20px;"></i>
-                        <span>Payment Methods</span>
+                    <div style="padding: 16px; border-bottom: 1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                        <span style="font-weight:600;"><i class="ph ph-map-pin" style="margin-right:8px; font-size:18px; vertical-align:middle;"></i> Saved Addresses</span>
+                        <i class="ph ph-caret-right text-secondary"></i>
                     </div>
-                    <i class="ph ph-caret-right" style="color: var(--gray-dark);"></i>
-                </div>
-                <div class="profile-link">
-                    <div class="profile-link-left">
-                        <i class="ph ph-info" style="font-size: 20px;"></i>
-                        <span>About AutoKart</span>
+                    <div style="padding: 16px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; color: var(--danger);">
+                        <span style="font-weight:600;"><i class="ph ph-sign-out" style="margin-right:8px; font-size:18px; vertical-align:middle;"></i> Logout</span>
                     </div>
-                    <i class="ph ph-caret-right" style="color: var(--gray-dark);"></i>
-                </div>
-                <div class="profile-link" style="color: #e53935;">
-                    <div class="profile-link-left">
-                        <i class="ph ph-sign-out" style="font-size: 20px;"></i>
-                        <span>Logout</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-    mainContent.innerHTML = html;
-}
-
-// Helper Components
-function productCard(product) {
-    const inCart = cart.find(i => i.id === product.id);
-    const btnClass = inCart ? 'add-btn added' : 'add-btn';
-    const btnText = inCart ? 'Added' : 'Add +';
-    
-    return `
-        <div class="product-card">
-            <div class="product-img">
-                <i class="ph ${product.image}"></i>
-            </div>
-            <div class="product-info">
-                <div>
-                    <div class="product-title">${product.name}</div>
-                    <div class="product-cat">${categories.find(c => c.id === product.category)?.name || 'Part'}</div>
-                </div>
-                <div class="product-price-row">
-                    <div class="product-price">₹${product.price}</div>
-                    <button class="${btnClass}" onclick="toggleCart(${product.id})">${btnText}</button>
                 </div>
             </div>
         </div>
     `;
 }
 
-// Cart Logic
-function toggleCart(productId) {
-    const product = products.find(p => p.id === productId);
-    const existing = cart.find(i => i.id === productId);
+// --- Action Logic ---
+
+function toggleCart(e, productId) {
+    e.stopPropagation();
+    const p = products.find(x => x.id === productId);
+    const existing = cart.find(x => x.id === productId);
     
     if (existing) {
-        cart = cart.filter(i => i.id !== productId);
+        cart = cart.filter(x => x.id !== productId);
     } else {
-        cart.push({ ...product, qty: 1 });
+        cart.push({...p, qty: 1});
     }
     
-    updateCartBadge();
-    
-    // Re-render current view to update buttons
-    if (currentView === 'home') renderHome();
-    if (currentView === 'search') renderSearch();
-    // For shop view, we need to know which shop we are in, but simple re-render might lose param. 
-    // We can just update the DOM directly or re-render using current logic.
-    if (currentView === 'shop') {
-        const product = products.find(p => p.id === productId);
-        if (product) renderShop(product.shopId);
-    }
+    updateBadges();
+    if (currentView === 'home' || currentView === 'search') renderCurrentView();
 }
 
 function updateQty(productId, change) {
-    const item = cart.find(i => i.id === productId);
-    if (item) {
+    const item = cart.find(x => x.id === productId);
+    if(item) {
         item.qty += change;
-        if (item.qty <= 0) {
-            cart = cart.filter(i => i.id !== productId);
-        }
+        if(item.qty <= 0) cart = cart.filter(x => x.id !== productId);
     }
-    updateCartBadge();
-    renderCart(); // Re-render cart since we are there
+    updateBadges();
+    renderCurrentView();
 }
 
-function updateCartBadge() {
-    const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
-    if (totalItems > 0) {
-        cartBadge.textContent = totalItems;
+function toggleWishlist(e, productId) {
+    e.stopPropagation();
+    if(wishlist.includes(productId)) {
+        wishlist = wishlist.filter(id => id !== productId);
+    } else {
+        wishlist.push(productId);
+    }
+    if (currentView === 'home' || currentView === 'search') renderCurrentView();
+}
+
+function updateBadges() {
+    const count = cart.reduce((sum, item) => sum + item.qty, 0);
+    if(count > 0) {
+        cartBadge.innerText = count;
         cartBadge.classList.remove('hidden');
     } else {
         cartBadge.classList.add('hidden');
     }
 }
 
-// Marketplace Features
-function renderSell() {
+// --- Product Modal Logic ---
+function openProduct(id) {
+    const p = products.find(x => x.id === id);
+    if(!p) return;
+    
+    const inCart = cart.some(c => c.id === id);
+    
     let html = `
-        <div class="view active" id="view-sell">
-            <div style="padding: 16px; background: var(--white); border-bottom: 1px solid var(--gray-light);">
-                <h2 style="font-size: 20px; font-weight: 700;">Partner with AutoKart</h2>
-                <p style="font-size: 14px; color: var(--gray-dark); margin-top: 4px;">List your auto parts for sale on our platform.</p>
+        <div class="pd-header">
+            <div class="icon-btn" onclick="closeProduct()"><i class="ph ph-caret-down"></i></div>
+            <div class="icon-btn" onclick="toggleWishlistModal(${p.id})"><i class="ph ph-heart${wishlist.includes(p.id)?'-fill':''}" id="pd-wish-icon" style="color:${wishlist.includes(p.id)?'var(--primary-color)':'inherit'}"></i></div>
+        </div>
+        
+        <div class="pd-image-container">
+            ${p.image.startsWith('ph-') ? `<i class="ph ${p.image}"></i>` : `<img src="${p.image}" alt="${p.name}" class="product-photo-large">`}
+        </div>
+        
+        <div class="pd-info">
+            <div class="pd-brand">${p.brand}</div>
+            <div class="pd-title">${p.name}</div>
+            
+            <div class="pd-meta">
+                <div class="pd-rating"><i class="ph-fill ph-star"></i> ${p.rating} <span>(${p.reviews} reviews)</span></div>
+                <div class="pd-stock"><i class="ph-fill ph-check-circle"></i> In Stock</div>
             </div>
             
-            <form class="sell-form" onsubmit="handleSellSubmit(event)">
-                <div class="form-group">
-                    <label>Shop / Seller Name</label>
-                    <input type="text" id="sell-shop" class="form-control" placeholder="e.g. Mangalore Motors" required>
+            <div class="pd-price-box">
+                <div>
+                    <div class="pd-price">₹${p.price.toLocaleString()}</div>
+                    <div class="pd-mrp">MRP: ₹${p.mrp.toLocaleString()}</div>
                 </div>
-                
-                <div class="form-group">
-                    <label>Part Name</label>
-                    <input type="text" id="sell-part" class="form-control" placeholder="e.g. Royal Enfield Silencer" required>
+                <div style="background:var(--primary-color); color:white; padding:4px 8px; border-radius:4px; font-size:12px; font-weight:bold;">
+                    ${Math.round(((p.mrp - p.price)/p.mrp)*100)}% OFF
                 </div>
-                
-                <div class="form-group">
-                    <label>Category</label>
-                    <select id="sell-category" class="form-control select" required>
-                        ${categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('')}
-                    </select>
+            </div>
+            
+            <div class="pd-section-title">Specifications</div>
+            <div class="pd-specs">
+                <div class="spec-item">
+                    <span class="spec-label">Part Number</span>
+                    <span class="spec-value">${p.partNumber}</span>
                 </div>
-                
-                <div class="form-group">
-                    <label>Price (₹)</label>
-                    <input type="number" id="sell-price" class="form-control" placeholder="e.g. 1500" required>
+                <div class="spec-item">
+                    <span class="spec-label">Category</span>
+                    <span class="spec-value" style="text-transform:capitalize;">${p.category}</span>
                 </div>
-                
-                <div style="height: 20px;"></div>
-                
-                <button type="submit" class="btn btn-block">List Product <i class="ph ph-upload-simple"></i></button>
-            </form>
+            </div>
+            
+            <div class="pd-section-title">Description</div>
+            <p style="color:var(--text-secondary); font-size:14px; line-height:1.5; margin-bottom:24px;">
+                ${p.desc}
+            </p>
+            
+            <div class="pd-browser-link" onclick="openBrowser('https://en.wikipedia.org/wiki/${p.brand}')">
+                <i class="ph ph-globe"></i> View Official Supplier Documentation
+            </div>
+        </div>
+        
+        <div class="pd-action-bar">
+            <button class="btn btn-outline" style="flex: 0.8;" onclick="toggleCartModal(${p.id})" id="pd-cart-btn">
+                ${inCart ? 'Added to Cart' : 'Add to Cart'}
+            </button>
+            <button class="btn" style="flex: 1.2;">Buy Now</button>
         </div>
     `;
-    mainContent.innerHTML = html;
+    
+    productModalContent.innerHTML = html;
+    productModal.classList.add('active');
 }
 
-function handleSellSubmit(event) {
-    event.preventDefault();
-    
-    const shopName = document.getElementById('sell-shop').value;
-    const partName = document.getElementById('sell-part').value;
-    const catId = document.getElementById('sell-category').value;
-    const price = document.getElementById('sell-price').value;
-    
-    // Simulate adding to local data
-    const newShopId = 's' + (shops.length + 1);
-    
-    // Check if shop already exists
-    let existingShop = shops.find(s => s.name.toLowerCase() === shopName.toLowerCase());
-    if (!existingShop) {
-        shops.push({ id: newShopId, name: shopName, rating: 5.0, time: 'Ready to ship' });
-        existingShop = shops[shops.length - 1];
-    }
-    
-    products.push({
-        id: products.length + 1,
-        name: partName,
-        category: catId,
-        price: parseInt(price),
-        image: categories.find(c => c.id === catId).icon,
-        shopId: existingShop.id
-    });
-    
-    // Format WhatsApp message to send to admin for "approval"
-    const message = `*New Seller Listing Alert* 📝\n\n*Seller:* ${shopName}\n*Part:* ${partName}\n*Category:* ${catId}\n*Price:* ₹${price}\n\nPlease approve my listing for AutoKart.`;
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappNumber = "916364420190"; 
-    
-    if(confirm("Listing successfully added to the app locally! Do you want to send this listing to the admin via WhatsApp for official approval?")) {
-        window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
-    }
-    
-    navigate('home');
+function closeProduct() {
+    productModal.classList.remove('active');
+    renderCurrentView(); // Refresh underlying view
 }
 
-// Start App
+function toggleWishlistModal(id) {
+    if(wishlist.includes(id)) {
+        wishlist = wishlist.filter(x => x !== id);
+        document.getElementById('pd-wish-icon').className = 'ph ph-heart';
+        document.getElementById('pd-wish-icon').style.color = 'inherit';
+    } else {
+        wishlist.push(id);
+        document.getElementById('pd-wish-icon').className = 'ph ph-heart-fill';
+        document.getElementById('pd-wish-icon').style.color = 'var(--primary-color)';
+    }
+}
+
+function toggleCartModal(id) {
+    const btn = document.getElementById('pd-cart-btn');
+    if (cart.some(x => x.id === id)) {
+        cart = cart.filter(x => x.id !== id);
+        btn.innerText = 'Add to Cart';
+    } else {
+        const p = products.find(x => x.id === id);
+        cart.push({...p, qty: 1});
+        btn.innerText = 'Added to Cart';
+    }
+    updateBadges();
+}
+
+// --- Browser WebView Logic ---
+function openBrowser(url) {
+    browserUrlText.innerText = new URL(url).hostname;
+    browserFrame.src = url;
+    browserModal.classList.add('active');
+}
+function closeBrowser() {
+    browserModal.classList.remove('active');
+    setTimeout(() => { browserFrame.src = 'about:blank'; }, 300);
+}
+
+// --- UI Utilities ---
+function setupCarousel() {
+    const track = document.getElementById('home-carousel');
+    const indicators = document.getElementById('carousel-indicators').children;
+    if(!track) return;
+    
+    let currentIndex = 0;
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % banners.length;
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        
+        Array.from(indicators).forEach((ind, i) => {
+            ind.classList.toggle('active', i === currentIndex);
+        });
+    }, 4000);
+}
+
+// Initialize App
 init();

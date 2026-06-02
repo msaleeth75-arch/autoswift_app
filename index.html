@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AutoKart - Auto Parts Delivery</title>
+    <title>Auto Kart - Premium Auto Parts Marketplace</title>
     
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#FFD700">
+    <meta name="theme-color" content="#FF3B30">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Leaflet CSS for Maps -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
@@ -18,21 +23,33 @@
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
-<body>
-    <!-- App Container to simulate mobile view on desktop -->
+<body class="light-mode">
     <div id="app">
         <!-- Header -->
         <header id="app-header">
-            <div class="header-left">
-                <img src="logo.png" alt="AutoKart Logo" class="app-logo">
-                <div class="location">
-                    <span class="location-title">AutoKart</span>
-                    <span class="location-desc">Mangalore</span>
+            <div class="header-top">
+                <div class="header-left" onclick="navigate('home')">
+                    <img src="logo.png" alt="Auto Kart Logo" class="app-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'32\' height=\'32\' viewBox=\'0 0 32 32\'><rect width=\'32\' height=\'32\' fill=\'%23FF3B30\'/><text x=\'50%\' y=\'50%\' font-family=\'sans-serif\' font-size=\'16\' font-weight=\'bold\' fill=\'white\' dominant-baseline=\'middle\' text-anchor=\'middle\'>AK</text></svg>'">
+                    <div class="brand-text">
+                        <span class="brand-title">Auto Kart</span>
+                        <span class="brand-subtitle">Premium Parts</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="icon-btn" onclick="toggleTheme()">
+                        <i class="ph ph-moon" id="theme-icon"></i>
+                    </div>
+                    <div class="icon-btn" onclick="navigate('profile')">
+                        <i class="ph ph-user"></i>
+                    </div>
                 </div>
             </div>
-            <div class="header-right">
-                <div class="profile-icon" onclick="navigate('profile')">
-                    <i class="ph ph-user"></i>
+            
+            <div class="search-bar-container" id="global-search-container">
+                <div class="search-bar" onclick="navigate('search')">
+                    <i class="ph ph-magnifying-glass"></i>
+                    <input type="text" placeholder="Search by vehicle, part number..." readonly>
+                    <i class="ph ph-microphone"></i>
                 </div>
             </div>
         </header>
@@ -42,35 +59,56 @@
             <!-- Dynamic Content Injected Here -->
         </main>
 
+        <!-- Product Modal Overlay -->
+        <div id="product-modal" class="modal">
+            <div class="modal-content" id="product-modal-content">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+        <!-- In-App Browser (WebView) Overlay -->
+        <div id="browser-modal" class="modal browser-overlay">
+            <div class="browser-header">
+                <div class="browser-actions">
+                    <button onclick="closeBrowser()"><i class="ph ph-x"></i></button>
+                </div>
+                <div class="browser-url">
+                    <i class="ph ph-lock-key"></i>
+                    <span id="browser-url-text">secure-supplier.com</span>
+                </div>
+                <div class="browser-actions">
+                    <button><i class="ph ph-dots-three-vertical"></i></button>
+                </div>
+            </div>
+            <iframe id="browser-frame" src="about:blank"></iframe>
+        </div>
+
         <!-- Bottom Navigation -->
         <nav id="bottom-nav">
             <div class="nav-item active" onclick="navigate('home')">
                 <i class="ph ph-house"></i>
                 <span>Home</span>
             </div>
-            <div class="nav-item" onclick="navigate('search')">
-                <i class="ph ph-magnifying-glass"></i>
-                <span>Search</span>
+            <div class="nav-item" onclick="navigate('categories')">
+                <i class="ph ph-squares-four"></i>
+                <span>Categories</span>
             </div>
-            <div class="nav-item" onclick="navigate('sell')">
-                <i class="ph ph-plus-circle"></i>
-                <span>Sell</span>
+            <div class="nav-item" onclick="navigate('seller')">
+                <i class="ph ph-storefront"></i>
+                <span>Seller</span>
             </div>
             <div class="nav-item" onclick="navigate('cart')">
-                <i class="ph ph-shopping-cart"></i>
+                <div class="icon-wrapper">
+                    <i class="ph ph-shopping-cart"></i>
+                    <span id="cart-badge" class="badge hidden">0</span>
+                </div>
                 <span>Cart</span>
-                <span id="cart-badge" class="badge hidden">0</span>
             </div>
-            <div class="nav-item" onclick="navigate('track')">
-                <i class="ph ph-map-trifold"></i>
-                <span>Track</span>
+            <div class="nav-item" onclick="navigate('admin')">
+                <i class="ph ph-shield-check"></i>
+                <span>Admin</span>
             </div>
         </nav>
-        
-        <!-- WhatsApp Floating Button -->
-        <a href="https://wa.me/916364420190" target="_blank" id="whatsapp-btn">
-            <i class="ph ph-whatsapp-logo"></i>
-        </a>
     </div>
 
     <!-- Leaflet JS -->
@@ -78,16 +116,5 @@
     
     <!-- Custom JS -->
     <script src="app.js"></script>
-    
-    <!-- PWA Service Worker Registration -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('Service Worker registered!', reg))
-                    .catch(err => console.log('Service Worker registration failed:', err));
-            });
-        }
-    </script>
 </body>
 </html>
