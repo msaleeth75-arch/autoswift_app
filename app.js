@@ -89,6 +89,7 @@ function renderCurrentView() {
         case 'search': html = getSearchHtml(); break;
         case 'categories': html = getCategoriesHtml(); break;
         case 'cart': html = getCartHtml(); break;
+        case 'checkout': html = getCheckoutHtml(); break;
         case 'seller': html = getSellerHtml(); break;
         case 'admin': html = getAdminHtml(); break;
         case 'profile': html = getProfileHtml(); break;
@@ -521,7 +522,7 @@ function openProduct(id) {
             <button class="btn btn-outline" style="flex: 0.8;" onclick="toggleCartModal(${p.id})" id="pd-cart-btn">
                 ${inCart ? 'Added to Cart' : 'Add to Cart'}
             </button>
-            <button class="btn" style="flex: 1.2;">Buy Now</button>
+            <button class="btn" style="flex: 1.2;" onclick="buyNow(${p.id})">Buy Now</button>
         </div>
     `;
     
@@ -531,7 +532,161 @@ function openProduct(id) {
 
 function closeProduct() {
     productModal.classList.remove('active');
-    renderCurrentView(); // Refresh underlying view
+    renderCurrentView();
+}
+
+function buyNow(productId) {
+    const p = products.find(x => x.id === productId);
+    if (!p) return;
+    if (!cart.some(x => x.id === productId)) {
+        cart.push({...p, qty: 1});
+        updateBadges();
+    }
+    closeProduct();
+    navigate('checkout');
+}
+
+function getCheckoutHtml() {
+    if (cart.length === 0) {
+        return `<div class="view active empty-state"><i class="ph ph-shopping-cart"></i><h3>Nothing to checkout</h3><button class="btn" style="margin-top:24px" onclick="navigate('home')">Shop Now</button></div>`;
+    }
+    const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const tax = Math.round(subtotal * 0.18);
+    const total = subtotal + tax;
+    return `
+    <div class="view active">
+        <div style="display:flex;align-items:center;gap:12px;padding:16px 16px 0">
+            <div class="icon-btn" onclick="navigate('cart')"><i class="ph ph-arrow-left"></i></div>
+            <h2 style="font-size:18px;font-weight:700">Checkout</h2>
+        </div>
+
+        <div style="padding:16px">
+            <div class="dashboard-card" style="margin:0 0 16px">
+                <div class="pd-section-title" style="margin-bottom:12px"><i class="ph ph-map-pin" style="margin-right:6px;color:var(--primary-color)"></i>Delivery Address</div>
+                <div class="form-group"><label>Full Name</label><input class="form-control" id="co-name" placeholder="e.g. Rahul Sharma" /></div>
+                <div class="form-group"><label>Phone</label><input class="form-control" id="co-phone" type="tel" placeholder="+91 98765 43210" /></div>
+                <div class="form-group"><label>Street Address</label><input class="form-control" id="co-addr" placeholder="House no., Street, Area" /></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                    <div class="form-group"><label>City</label><input class="form-control" id="co-city" placeholder="Mangalore" /></div>
+                    <div class="form-group"><label>Pincode</label><input class="form-control" id="co-pin" placeholder="575001" /></div>
+                </div>
+            </div>
+
+            <div class="dashboard-card" style="margin:0 0 16px">
+                <div class="pd-section-title" style="margin-bottom:12px"><i class="ph ph-credit-card" style="margin-right:6px;color:var(--primary-color)"></i>Payment Method</div>
+                <div id="payment-options">
+                    <div class="pay-opt selected" onclick="selectPayOpt(this,'cod')" data-method="cod" style="display:flex;align-items:center;gap:12px;padding:14px;border-radius:var(--radius-sm);border:2px solid var(--primary-color);margin-bottom:10px;cursor:pointer;background:rgba(230,57,70,.05)">
+                        <i class="ph ph-money" style="font-size:22px;color:#2A9D8F"></i>
+                        <div style="flex:1"><div style="font-weight:600">Cash on Delivery</div><div style="font-size:12px;color:var(--text-secondary)">Pay when you receive</div></div>
+                        <i class="ph ph-check-circle" style="color:var(--primary-color)"></i>
+                    </div>
+                    <div class="pay-opt" onclick="selectPayOpt(this,'upi')" data-method="upi" style="display:flex;align-items:center;gap:12px;padding:14px;border-radius:var(--radius-sm);border:2px solid var(--border-color);margin-bottom:10px;cursor:pointer">
+                        <i class="ph ph-qr-code" style="font-size:22px;color:#457B9D"></i>
+                        <div style="flex:1"><div style="font-weight:600">UPI / GPay / PhonePe</div><div style="font-size:12px;color:var(--text-secondary)">Instant payment</div></div>
+                    </div>
+                    <div class="pay-opt" onclick="selectPayOpt(this,'card')" data-method="card" style="display:flex;align-items:center;gap:12px;padding:14px;border-radius:var(--radius-sm);border:2px solid var(--border-color);cursor:pointer">
+                        <i class="ph ph-credit-card" style="font-size:22px;color:#F4A261"></i>
+                        <div style="flex:1"><div style="font-weight:600">Debit / Credit Card</div><div style="font-size:12px;color:var(--text-secondary)">Visa, Mastercard accepted</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card" style="margin:0 0 80px">
+                <div class="pd-section-title" style="margin-bottom:12px"><i class="ph ph-receipt" style="margin-right:6px;color:var(--primary-color)"></i>Order Summary</div>
+                ${cart.map(item => `<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px"><span style="flex:1;margin-right:8px">${item.name} x${item.qty}</span><span style="font-weight:600">₹${(item.price*item.qty).toLocaleString()}</span></div>`).join('')}
+                <div style="border-top:1px dashed var(--border-color);margin-top:12px;padding-top:12px">
+                    <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px"><span>GST (18%)</span><span>₹${tax.toLocaleString()}</span></div>
+                    <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px"><span>Delivery</span><span style="color:var(--success)">Free</span></div>
+                    <div style="display:flex;justify-content:space-between;font-weight:800;font-size:18px;margin-top:8px"><span>Total</span><span>₹${total.toLocaleString()}</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div style="position:fixed;bottom:65px;width:100%;max-width:480px;background:var(--surface-color);padding:16px;box-shadow:0 -4px 20px rgba(0,0,0,.1);z-index:50">
+            <button class="btn btn-block" onclick="placeOrder(${total})">
+                <i class="ph ph-lock-key"></i> Place Order · ₹${total.toLocaleString()}
+            </button>
+        </div>
+    </div>`;
+}
+
+let selectedPayMethod = 'cod';
+function selectPayOpt(el, method) {
+    selectedPayMethod = method;
+    document.querySelectorAll('.pay-opt').forEach(o => {
+        o.style.border = '2px solid var(--border-color)';
+        o.style.background = '';
+        const chk = o.querySelector('.ph-check-circle');
+        if (chk) chk.remove();
+    });
+    el.style.border = '2px solid var(--primary-color)';
+    el.style.background = 'rgba(230,57,70,.05)';
+    el.insertAdjacentHTML('beforeend', '<i class="ph ph-check-circle" style="color:var(--primary-color)"></i>');
+}
+
+function placeOrder(total) {
+    const name = document.getElementById('co-name')?.value.trim();
+    const phone = document.getElementById('co-phone')?.value.trim();
+    const addr = document.getElementById('co-addr')?.value.trim();
+    const city = document.getElementById('co-city')?.value.trim();
+    const pin = document.getElementById('co-pin')?.value.trim();
+
+    if (!name || !phone || !addr || !city || !pin) {
+        alert('Please fill in all delivery address fields.');
+        return;
+    }
+
+    const orderId = 'AK' + Math.random().toString(36).substring(2,8).toUpperCase();
+    const orderData = { orderId, name, phone, addr, city, pin, method: selectedPayMethod, total, items: [...cart] };
+    cart = [];
+    updateBadges();
+    showOrderConfirmation(orderData);
+}
+
+function showOrderConfirmation(o) {
+    const methodLabel = { cod: 'Cash on Delivery', upi: 'UPI / GPay', card: 'Debit / Credit Card' }[o.method] || o.method;
+    mainContent.innerHTML = `
+    <div class="view active" style="padding:32px 16px;text-align:center">
+        <div style="width:80px;height:80px;border-radius:50%;background:rgba(42,157,143,.15);display:flex;justify-content:center;align-items:center;margin:0 auto 20px;">
+            <i class="ph-fill ph-check-circle" style="font-size:48px;color:#2A9D8F"></i>
+        </div>
+        <h2 style="font-size:22px;font-weight:800;margin-bottom:8px">Order Placed!</h2>
+        <p style="color:var(--text-secondary);font-size:14px;margin-bottom:24px">Thank you, ${o.name}. Your order has been confirmed.</p>
+
+        <div class="dashboard-card" style="text-align:left;margin-bottom:16px">
+            <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+                <span style="color:var(--text-secondary);font-size:13px">Order ID</span>
+                <span style="font-weight:700">#${o.orderId}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+                <span style="color:var(--text-secondary);font-size:13px">Amount Paid</span>
+                <span style="font-weight:700">₹${o.total.toLocaleString()}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+                <span style="color:var(--text-secondary);font-size:13px">Payment</span>
+                <span style="font-weight:700">${methodLabel}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between">
+                <span style="color:var(--text-secondary);font-size:13px">Delivery to</span>
+                <span style="font-weight:700;text-align:right;max-width:60%">${o.addr}, ${o.city} – ${o.pin}</span>
+            </div>
+        </div>
+
+        <div class="dashboard-card" style="text-align:left;margin-bottom:32px">
+            <div class="pd-section-title" style="margin-bottom:12px">Estimated Delivery</div>
+            <div style="display:flex;gap:12px;align-items:center">
+                <i class="ph ph-truck" style="font-size:28px;color:var(--primary-color)"></i>
+                <div>
+                    <div style="font-weight:700">3 – 5 Business Days</div>
+                    <div style="font-size:12px;color:var(--text-secondary)">You will receive SMS updates on ${o.phone}</div>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-block" onclick="navigate('home')"><i class="ph ph-house"></i> Back to Home</button>
+    </div>`;
+    // reset nav highlight
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
 }
 
 function toggleWishlistModal(id) {
