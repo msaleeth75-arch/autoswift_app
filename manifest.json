@@ -1,21 +1,25 @@
 {
-  "name": "AutoKart - Auto Parts Delivery",
-  "short_name": "AutoKart",
-  "description": "Mangalore's fast auto parts delivery and marketplace.",
+  "name": "Mangalore AutoParts - Premium Auto Parts",
+  "short_name": "AutoParts",
+  "description": "Mangalore's #1 online auto parts store. Shop engine parts, brakes, batteries, tyres & accessories.",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#FFD700",
+  "background_color": "#0F1B2D",
+  "theme_color": "#0F1B2D",
+  "orientation": "portrait-primary",
+  "categories": ["shopping", "business"],
   "icons": [
     {
       "src": "logo.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "logo.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

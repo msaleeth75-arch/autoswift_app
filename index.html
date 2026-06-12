@@ -3,118 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Auto Kart - Premium Auto Parts Marketplace</title>
-    
+    <title>Mangalore AutoParts - Premium Auto Parts Marketplace</title>
+    <meta name="description" content="Mangalore's #1 online auto parts store. Shop engine parts, brakes, batteries, tyres & accessories with fast delivery.">
+    <meta name="keywords" content="auto parts, car parts, engine oil, brakes, batteries, tyres, Mangalore, automotive">
+    <meta name="author" content="Mangalore AutoParts">
+
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#FF3B30">
-    
+    <meta name="theme-color" content="#0F1B2D">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="logo.png">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Leaflet CSS for Maps -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+
+    <!-- Firebase SDKs (Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+
+    <!-- Razorpay Checkout -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
-    
-    <!-- Phosphor Icons -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body class="light-mode">
     <div id="app">
-        <!-- Header -->
+        <!-- ===== HEADER ===== -->
         <header id="app-header">
             <div class="header-top">
                 <div class="header-left" onclick="navigate('home')">
-                    <img src="logo.png" alt="Auto Kart Logo" class="app-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'32\' height=\'32\' viewBox=\'0 0 32 32\'><rect width=\'32\' height=\'32\' fill=\'%23FF3B30\'/><text x=\'50%\' y=\'50%\' font-family=\'sans-serif\' font-size=\'16\' font-weight=\'bold\' fill=\'white\' dominant-baseline=\'middle\' text-anchor=\'middle\'>AK</text></svg>'">
+                    <img src="logo.png" alt="Mangalore AutoParts" class="app-logo"
+                         onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2236%22 height=%2236%22 viewBox=%220 0 36 36%22><rect width=%2236%22 height=%2236%22 rx=%228%22 fill=%22%23E63946%22/><text x=%2250%%22 y=%2250%%22 font-family=%22Inter,sans-serif%22 font-size=%2214%22 font-weight=%22800%22 fill=%22white%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22>MA</text></svg>'">
                     <div class="brand-text">
-                        <span class="brand-title">Auto Kart</span>
-                        <span class="brand-subtitle">Premium Parts</span>
+                        <span class="brand-title">Mangalore AutoParts</span>
+                        <span class="brand-subtitle">Premium Parts Store</span>
                     </div>
                 </div>
                 <div class="header-right">
-                    <div class="icon-btn" onclick="toggleTheme()">
+                    <div class="icon-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="Toggle theme">
                         <i class="ph ph-moon" id="theme-icon"></i>
                     </div>
-                    <div class="icon-btn" onclick="navigate('profile')">
-                        <i class="ph ph-user"></i>
+                    <div class="icon-btn" onclick="navigate('notifications')" title="Notifications">
+                        <i class="ph ph-bell"></i>
+                        <span id="notif-badge" class="mini-badge hidden">0</span>
                     </div>
                 </div>
             </div>
-            
+
             <div class="search-bar-container" id="global-search-container">
                 <div class="search-bar" onclick="navigate('search')">
                     <i class="ph ph-magnifying-glass"></i>
-                    <input type="text" placeholder="Search by vehicle, part number..." readonly>
-                    <i class="ph ph-microphone"></i>
+                    <input type="text" placeholder="Search parts, brands, SKU..." readonly id="global-search-input">
+                    <i class="ph ph-sliders-horizontal"></i>
                 </div>
             </div>
         </header>
 
-        <!-- Main Content Area -->
+        <!-- ===== MAIN CONTENT AREA ===== -->
         <main id="main-content">
-            <!-- Dynamic Content Injected Here -->
+            <!-- Dynamic content injected by app.js -->
         </main>
 
-        <!-- Product Modal Overlay -->
-        <div id="product-modal" class="modal">
-            <div class="modal-content" id="product-modal-content">
-                <!-- Injected via JS -->
-            </div>
-        </div>
-
-        <!-- In-App Browser (WebView) Overlay -->
-        <div id="browser-modal" class="modal browser-overlay">
-            <div class="browser-header">
-                <div class="browser-actions">
-                    <button onclick="closeBrowser()"><i class="ph ph-x"></i></button>
-                </div>
-                <div class="browser-url">
-                    <i class="ph ph-lock-key"></i>
-                    <span id="browser-url-text">secure-supplier.com</span>
-                </div>
-                <div class="browser-actions">
-                    <button><i class="ph ph-dots-three-vertical"></i></button>
-                </div>
-            </div>
-            <iframe id="browser-frame" src="about:blank"></iframe>
-        </div>
-
-        <!-- Bottom Navigation -->
+        <!-- ===== BOTTOM NAVIGATION ===== -->
         <nav id="bottom-nav">
-            <div class="nav-item active" onclick="navigate('home')">
+            <div class="nav-item active" data-view="home" onclick="navigate('home')">
                 <i class="ph ph-house"></i>
                 <span>Home</span>
             </div>
-            <div class="nav-item" onclick="navigate('categories')">
+            <div class="nav-item" data-view="categories" onclick="navigate('categories')">
                 <i class="ph ph-squares-four"></i>
                 <span>Categories</span>
             </div>
-            <div class="nav-item" onclick="navigate('seller')">
-                <i class="ph ph-storefront"></i>
-                <span>Seller</span>
+            <div class="nav-item" data-view="wishlist" onclick="navigate('wishlist')">
+                <div class="icon-wrapper">
+                    <i class="ph ph-heart"></i>
+                    <span id="wish-badge" class="badge hidden">0</span>
+                </div>
+                <span>Wishlist</span>
             </div>
-            <div class="nav-item" onclick="navigate('cart')">
+            <div class="nav-item" data-view="cart" onclick="navigate('cart')">
                 <div class="icon-wrapper">
                     <i class="ph ph-shopping-cart"></i>
                     <span id="cart-badge" class="badge hidden">0</span>
                 </div>
                 <span>Cart</span>
             </div>
-            <div class="nav-item" onclick="navigate('admin')">
-                <i class="ph ph-shield-check"></i>
-                <span>Admin</span>
+            <div class="nav-item" data-view="profile" onclick="navigate('profile')">
+                <i class="ph ph-user-circle"></i>
+                <span>Profile</span>
             </div>
         </nav>
     </div>
 
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-    
-    <!-- Custom JS -->
+    <!-- ===== TOAST NOTIFICATION CONTAINER ===== -->
+    <div id="toast-container"></div>
+
+    <!-- ===== LOADING OVERLAY ===== -->
+    <div id="loading-overlay" class="hidden">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <p class="loader-text">Loading...</p>
+        </div>
+    </div>
+
+    <!-- ===== IMAGE VIEWER MODAL ===== -->
+    <div id="image-viewer" class="image-viewer-overlay hidden">
+        <button class="iv-close" onclick="closeImageViewer()"><i class="ph ph-x"></i></button>
+        <button class="iv-prev" onclick="prevImage()"><i class="ph ph-caret-left"></i></button>
+        <img id="iv-image" src="" alt="Product Image">
+        <button class="iv-next" onclick="nextImage()"><i class="ph ph-caret-right"></i></button>
+        <div class="iv-counter" id="iv-counter">1 / 3</div>
+    </div>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script src="firebase-config.js"></script>
     <script src="app.js"></script>
+    <script src="admin.js"></script>
 </body>
 </html>
