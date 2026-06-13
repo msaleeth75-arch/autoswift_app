@@ -1,15 +1,14 @@
 // ============================================================
-// Mangalore AutoParts - Service Worker
+// AutoKart - Service Worker
 // Handles caching, offline support, and push notifications
 // ============================================================
 
-const CACHE_NAME = 'mangalore-autoparts-v1';
+const CACHE_NAME = 'autokart-cache-v1';
 const STATIC_ASSETS = [
     './',
     './index.html',
     './style.css',
     './app.js',
-    './admin.js',
     './firebase-config.js',
     './logo.png',
     './manifest.json',
@@ -86,7 +85,7 @@ self.addEventListener('fetch', event => {
 
 // Push Notification handler
 self.addEventListener('push', event => {
-    let data = { title: 'Mangalore AutoParts', body: 'You have a new update!', icon: './logo.png' };
+    let data = { title: 'AutoKart', body: 'You have a new update!', icon: './logo.png' };
     
     if (event.data) {
         try {

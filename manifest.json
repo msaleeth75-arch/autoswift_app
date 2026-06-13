@@ -1,11 +1,11 @@
 {
-  "name": "Mangalore AutoParts - Premium Auto Parts",
-  "short_name": "AutoParts",
-  "description": "Mangalore's #1 online auto parts store. Shop engine parts, brakes, batteries, tyres & accessories.",
+  "name": "AutoKart - Your Trusted Auto Parts Marketplace",
+  "short_name": "AutoKart",
+  "description": "Your Trusted Auto Parts Marketplace. Shop engine parts, brakes, batteries, tyres, filters & accessories.",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#0F1B2D",
-  "theme_color": "#0F1B2D",
+  "background_color": "#2874f0",
+  "theme_color": "#2874f0",
   "orientation": "portrait-primary",
   "categories": ["shopping", "business"],
   "icons": [
